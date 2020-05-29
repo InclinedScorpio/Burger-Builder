@@ -7,11 +7,21 @@ import styleB from "./Burger.module.css";
 import BurgerIngredients from "./BurgerIngredients/BurgerIngredients";
 
 const Burger = props => {
+	let preparedBurger = Object.keys(props.ingredients)
+		.map((ig, index) => {
+			return [...Array(props.ingredients[ig])].map((_, i) => {
+				return <BurgerIngredients type={ig} key={ig + i} />;
+			});
+		})
+		.flat();
+	if (preparedBurger.length === 0) {
+		preparedBurger = <p>Please Add Ingredients</p>;
+	}
+
 	return (
 		<div className={styleB.Burger}>
 			<BurgerIngredients type="BreadTop" />
-			<BurgerIngredients type="Cheese" />
-			<BurgerIngredients type="Meat" />
+			{preparedBurger}
 			<BurgerIngredients type="BreadBottom" />
 		</div>
 	);
