@@ -8,10 +8,10 @@ import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary.js/OrderSummary";
 
 const price = {
-	Salad: 2,
-	Bacon: 5,
-	Cheese: 3,
-	Meat: 7
+	Salad: 2.3,
+	Bacon: 5.2,
+	Cheese: 3.2,
+	Meat: 7.6
 };
 
 class BurgerBuilder extends Component {
@@ -79,6 +79,7 @@ class BurgerBuilder extends Component {
 					<OrderSummary
 						ingredients={this.state.ingredients}
 						totalPrice={this.state.totalPrice}
+						paymentCancelled={this.cancelPaymentHandler}
 					/>
 				</Modal>
 

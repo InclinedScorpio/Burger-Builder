@@ -33,7 +33,7 @@ const BuildControls = props => {
 				onClick={props.paymentStarted}
 			>
 				{props.isCheckoutAvailable ? (
-					<span>Pay {props.priceToPay}$</span>
+					<span>Pay {props.priceToPay.toFixed(2)}$</span>
 				) : (
 					"Add Ingredient to Checkout"
 				)}
