@@ -11,7 +11,7 @@
 	z-index: 90;
 	color: rgb(255, 237, 225);
 	font-size: 3vh;
-	font-weight: 600;
+	font-weight: 300;
 }
 
 .Toolbar nav {
@@ -23,7 +23,7 @@
 	height: 80%;
 }
 
-@media (max-width: 499px) {
+@media (max-width: 500px) {
 	.DesktopOnly {
 		display: none;
 	}
