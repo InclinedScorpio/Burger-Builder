@@ -4,6 +4,7 @@ import React from "react";
 import styleBC from "./BuildControls.module.css";
 //components
 import BuildControl from "./BuildControl/BuildControl";
+import Auxiliary from "../../hoc/Auxiliary";
 
 const ingredients = ["Cheese", "Meat", "Bacon", "Salad"];
 
@@ -25,6 +26,18 @@ const BuildControls = props => {
 					/>
 				);
 			})}
+
+			<button
+				className={styleBC.OrderButton}
+				disabled={!props.isCheckoutAvailable}
+				onClick={props.paymentStarted}
+			>
+				{props.isCheckoutAvailable ? (
+					<span>Pay {props.priceToPay}$</span>
+				) : (
+					"Add Ingredient to Checkout"
+				)}
+			</button>
 		</div>
 	);
 };
