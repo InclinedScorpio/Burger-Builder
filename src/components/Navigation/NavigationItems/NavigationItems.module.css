@@ -1,0 +1,11 @@
+.NavigationItems {
+	height: 100;
+	box-sizing: border-box;
+	display: flex;
+	margin: 0;
+	align-items: center;
+	padding: 0;
+	list-style: none;
+	font-size: 2vh;
+	color: inherit;
+}
