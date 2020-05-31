@@ -1,6 +1,6 @@
 .SideDrawer {
-	width: 270px;
-	max-width: 70%;
+	width: 230px;
+	max-width: 60%;
 	position: fixed;
 	top: 0;
 	left: 0;
@@ -9,6 +9,8 @@
 	z-index: 200;
 	background-color: white;
 	transition: transform 0.6s ease-out;
+	border-top-right-radius: 7%;
+	border-bottom-right-radius: 7%;
 }
 
 .Open {
@@ -21,4 +23,5 @@
 
 .SideDrawer .Logo {
 	height: 10%;
+	text-align: left;
 }

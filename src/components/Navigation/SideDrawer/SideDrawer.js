@@ -7,13 +7,22 @@ import Logo from "../../Logo/Logo";
 //styles
 import styleSD from "./SideDrawer.module.css";
 
-const SideDrawer = props => (
-	<div className={[styleSD.SideDrawer, styleSD.Open].join(" ")}>
-		<div className={styleSD.Logo}>
-			<Logo />
+const SideDrawer = props => {
+	let classes = [styleSD.SideDrawer];
+	if (props.sideDrawerVisible) {
+		classes.push(styleSD.Open);
+	} else {
+		classes.push(styleSD.Close);
+	}
+
+	return (
+		<div className={classes.join(" ")}>
+			<div className={styleSD.Logo}>
+				<Logo />
+			</div>
+			<NavigationItems />
 		</div>
-		<NavigationItems />
-	</div>
-);
+	);
+};
 
 export default SideDrawer;

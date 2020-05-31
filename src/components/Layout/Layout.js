@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 
 //components
 import Auxiliary from "../../hoc/Auxiliary";
@@ -7,17 +7,43 @@ import SideDrawer from "../Navigation/SideDrawer/SideDrawer";
 
 //style
 import styleLayout from "./Layout.module.css";
+import BackDrop from "../UI/BackDrop/BackDrop";
 
-const Layout = props => {
-	return (
-		<Auxiliary>
-			<Toolbar />
-			<div className={styleLayout.DesktopOnly}>
-				<SideDrawer />
-			</div>
-			<main className={styleLayout.Content}>{props.children}</main>
-		</Auxiliary>
-	);
-};
+class Layout extends Component {
+	state = {
+		backDropVisible: true,
+		sideDrawerVisible: true
+	};
+
+	backDropCloseHandler = () => {
+		this.setState({
+			backDropVisible: false,
+			sideDrawerVisible: false
+		});
+	};
+
+	backDropOpenHandler = () => {
+		this.setState({
+			backDropVisible: true,
+			sideDrawerVisible: true
+		});
+	};
+
+	render() {
+		return (
+			<Auxiliary>
+				<Toolbar />
+				<div className={styleLayout.DesktopOnly}>
+					<BackDrop
+						show={this.state.backDropVisible}
+						closeModal={this.backDropCloseHandler}
+					/>
+					<SideDrawer sideDrawerVisible={this.state.sideDrawerVisible} />
+				</div>
+				<main className={styleLayout.Content}>{this.props.children}</main>
+			</Auxiliary>
+		);
+	}
+}
 
 export default Layout;

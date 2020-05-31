@@ -50,13 +50,18 @@
 		color: #ffa01b;
 		font-weight: 600;
 		margin: 0;
+		text-align: center;
+		font-size: 120%;
 	}
 
 	.NavigationItem a:hover,
-	.NavigationItem a:active,
+	.NavigationItem a:active {
+		color: white;
+		background-color: #ffa01b;
+	}
 	.NavigationItem .a {
-		background-color: #8f5c2c;
-		border-bottom: 3px solid #40a4c8;
-		width: 100%;
+		color: #ffa01b;
+		border-left: 6px solid blue;
+		/* border-bottom: 2px solid #ffa01b; */
 	}
 }
