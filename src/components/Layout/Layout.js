@@ -29,10 +29,19 @@ class Layout extends Component {
 		});
 	};
 
+	toggleSideDrawerHandler = () => {
+		this.setState((prevState, props) => {
+			return {
+				sideDrawerVisible: !prevState.sideDrawerVisible,
+				backDropVisible: !prevState.backDropVisible
+			};
+		});
+	};
+
 	render() {
 		return (
 			<Auxiliary>
-				<Toolbar />
+				<Toolbar toggleSideDrawer={this.toggleSideDrawerHandler} />
 				<div className={styleLayout.DesktopOnly}>
 					<BackDrop
 						show={this.state.backDropVisible}

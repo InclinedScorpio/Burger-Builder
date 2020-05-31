@@ -6,11 +6,12 @@ import styleTB from "./Toolbar.module.css";
 //components
 import Logo from "../../Logo/Logo";
 import NavigationItems from "../NavigationItems/NavigationItems";
+import SideDrawerToggle from "../SideDrawer/SideDrawerToggle/SideDrawerToggle";
 
 const Toolbar = props => {
 	return (
 		<header className={styleTB.Toolbar}>
-			<div>Menu</div>
+			<SideDrawerToggle toggleSideDrawer={props.toggleSideDrawer} />
 			<div className={styleTB.Logo}>
 				<Logo />
 			</div>
