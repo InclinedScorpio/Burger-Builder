@@ -1,18 +1,18 @@
 import React, { Component } from "react";
 
 //components
-import Auxiliary from "../../hoc/Auxiliary";
-import Toolbar from "../Navigation/Toolbar/Toolbar";
-import SideDrawer from "../Navigation/SideDrawer/SideDrawer";
+import Auxiliary from "../Auxiliary/Auxiliary";
+import Toolbar from "../../components/Navigation/Toolbar/Toolbar";
+import SideDrawer from "../../components/Navigation/SideDrawer/SideDrawer";
+import BackDrop from "../../components/UI/BackDrop/BackDrop";
 
 //style
 import styleLayout from "./Layout.module.css";
-import BackDrop from "../UI/BackDrop/BackDrop";
 
 class Layout extends Component {
 	state = {
-		backDropVisible: true,
-		sideDrawerVisible: true
+		backDropVisible: false,
+		sideDrawerVisible: false
 	};
 
 	backDropCloseHandler = () => {

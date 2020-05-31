@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 //style
 import styleBI from "./BurgerIngredients.module.css";
 //component
-import Auxiliary from "../../../hoc/Auxiliary";
+import Auxiliary from "../../../hoc/Auxiliary/Auxiliary";
 
 let BurgerIngredients = props => {
 	let ingredients = null;

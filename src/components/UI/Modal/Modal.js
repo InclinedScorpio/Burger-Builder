@@ -1,9 +1,9 @@
-import React from "react";
+import React, { memo } from "react";
 
 //style
 import styleModal from "./Modal.module.css";
 import BackDrop from "../BackDrop/BackDrop";
-import Auxiliary from "../../../hoc/Auxiliary";
+import Auxiliary from "../../../hoc/Auxiliary/Auxiliary";
 
 const Modal = props => {
 	return (
@@ -22,4 +22,4 @@ const Modal = props => {
 	);
 };
 
-export default Modal;
+export default memo(Modal);
