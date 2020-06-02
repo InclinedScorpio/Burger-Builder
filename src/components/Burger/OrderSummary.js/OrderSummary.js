@@ -22,7 +22,9 @@ const OrderSummary = props => {
 				Total : <strong>{props.totalPrice.toFixed(2)}$</strong>{" "}
 				<i>(Tax Included)</i>
 			</p>
-			<Button btnType="Success">Continue</Button>
+			<Button btnType="Success" clicked={props.completePayment}>
+				Continue
+			</Button>
 			<Button btnType="Danger" clicked={props.paymentCancelled}>
 				Cancel
 			</Button>

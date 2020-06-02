@@ -1,11 +1,14 @@
 import React, { Component } from "react";
+import axios from "../../axiosOrders";
+import axiosInstance from "axios";
 
-//components
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import Auxiliary from "../../hoc/Auxiliary/Auxiliary";
 import Burger from "../../components/Burger/Burger";
 import BuildControls from "../../components/BuildControls/BuildControls";
 import Modal from "../../components/UI/Modal/Modal";
 import OrderSummary from "../../components/Burger/OrderSummary.js/OrderSummary";
+import Loader from "../../components/UI/Loader/Loader";
 
 const price = {
 	Salad: 2.3,
@@ -16,15 +19,21 @@ const price = {
 
 class BurgerBuilder extends Component {
 	state = {
-		ingredients: {
-			Salad: 0,
-			Bacon: 0,
-			Cheese: 0,
-			Meat: 0
-		},
+		ingredients: null,
 		totalPrice: 12,
 		ingredientsChoosen: 0,
-		paying: false
+		paying: false,
+		isLoading: false
+	};
+
+	componentDidMount = () => {
+		axiosInstance
+			.get("https://tech-burger.firebaseio.com/ingredients.json")
+			.then(res => {
+				this.setState({
+					ingredients: res.data
+				});
+			});
 	};
 
 	addIngredientsHandler = type => {
@@ -72,15 +81,51 @@ class BurgerBuilder extends Component {
 		});
 	};
 
+	completePaymentHandler = () => {
+		this.setState({
+			isLoading: true
+		});
+		const order = {
+			ingredients: {
+				Salad: this.state.ingredients.Salad,
+				Bacon: this.state.ingredients.Bacon,
+				Cheese: this.state.ingredients.Cheese,
+				Meat: this.state.ingredients.Meat
+			},
+			totalPrice: this.state.totalPrice
+		};
+
+		axios
+			.post("/orders.json", { order })
+			.then(res => {
+				this.setState({
+					isLoading: false,
+					paying: false
+				});
+			})
+			.catch(err => {
+				this.setState({
+					isLoading: false,
+					paying: false
+				});
+			});
+	};
+
 	render() {
-		return (
+		console.log("MyState%", this.state);
+		return this.state.ingredients ? (
 			<Auxiliary>
 				<Modal show={this.state.paying} closeModal={this.cancelPaymentHandler}>
-					<OrderSummary
-						ingredients={this.state.ingredients}
-						totalPrice={this.state.totalPrice}
-						paymentCancelled={this.cancelPaymentHandler}
-					/>
+					{this.state.isLoading ? (
+						<Loader />
+					) : (
+						<OrderSummary
+							ingredients={this.state.ingredients}
+							totalPrice={this.state.totalPrice}
+							paymentCancelled={this.cancelPaymentHandler}
+							completePayment={this.completePaymentHandler}
+						/>
+					)}
 				</Modal>
 
 				<Burger ingredients={this.state.ingredients} />
@@ -93,8 +138,10 @@ class BurgerBuilder extends Component {
 					paymentStarted={this.startPaymentHandler}
 				/>
 			</Auxiliary>
+		) : (
+			<Loader />
 		);
 	}
 }
 
-export default BurgerBuilder;
+export default withErrorHandler(BurgerBuilder, axios);
