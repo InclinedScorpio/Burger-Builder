@@ -7,6 +7,8 @@ import styleB from "./Burger.module.css";
 import BurgerIngredients from "./BurgerIngredients/BurgerIngredients";
 
 const Burger = props => {
+	console.log("Building:", props);
+
 	let preparedBurger = Object.keys(props.ingredients)
 		.map((ig, index) => {
 			return [...Array(props.ingredients[ig])].map((_, i) => {

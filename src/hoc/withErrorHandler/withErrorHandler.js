@@ -11,15 +11,18 @@ const withErrorHandler = (WrappedComponent, axios) => {
 			errorMessage: ""
 		};
 
+		resInterceptor = null;
+		reqInterceptor = null;
+
 		componentDidMount() {
-			axios.interceptors.request.use(config => {
+			this.reqInterceptor = axios.interceptors.request.use(config => {
 				// this.setState({
 				// 	isError: false
 				// });
 				return config;
 			});
 
-			axios.interceptors.response.use(null, err => {
+			this.resInterceptor = axios.interceptors.response.use(null, err => {
 				this.setState({
 					isError: true,
 					errorMessage: err.message,
@@ -28,6 +31,11 @@ const withErrorHandler = (WrappedComponent, axios) => {
 				return Promise.reject(err);
 			});
 		}
+
+		componentWillUnmount = () => {
+			axios.interceptors.request.eject(this.reqInterceptor);
+			axios.interceptors.response.eject(this.resInterceptor);
+		};
 
 		closeModal = () => {
 			this.setState({

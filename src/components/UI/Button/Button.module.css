@@ -8,6 +8,7 @@
 	padding: 10px;
 	margin: 10px;
 	font-weight: bold;
+	transition: all 1s ease-out;
 }
 
 .Button:first-of-type {
@@ -29,4 +30,8 @@
 
 .Button.Danger:hover {
 	color: #4e2007;
+}
+
+.Hide {
+	display: none;
 }

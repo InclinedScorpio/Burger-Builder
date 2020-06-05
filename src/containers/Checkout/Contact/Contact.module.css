@@ -1,0 +1,29 @@
+.Contact {
+	width: 100%;
+}
+
+.Contact input {
+	width: 50%;
+	height: 30px;
+	margin: 4px;
+	padding: 3px;
+	box-sizing: border-box;
+	border: none;
+	border-bottom: 1px solid rgb(185, 185, 185);
+}
+
+.Contact button {
+	text-align: center;
+	background-color: rgb(255, 212, 181);
+	box-shadow: 0px 5px 7px grey;
+	margin: auto;
+	padding: 0px;
+	border: 10px solid rgb(255, 212, 181);
+	margin: 8px;
+}
+
+.Contact form {
+	padding: 10px 10px;
+
+	width: 100%;
+}

@@ -23,7 +23,9 @@ class BurgerBuilder extends Component {
 		totalPrice: 12,
 		ingredientsChoosen: 0,
 		paying: false,
-		isLoading: false
+		isLoading: false,
+		isError: false,
+		errorMessage: ""
 	};
 
 	componentDidMount = () => {
@@ -32,6 +34,12 @@ class BurgerBuilder extends Component {
 			.then(res => {
 				this.setState({
 					ingredients: res.data
+				});
+			})
+			.catch(err => {
+				this.setState({
+					isError: true,
+					errorMessage: err.message
 				});
 			});
 	};
@@ -82,33 +90,14 @@ class BurgerBuilder extends Component {
 	};
 
 	completePaymentHandler = () => {
-		this.setState({
-			isLoading: true
-		});
-		const order = {
-			ingredients: {
-				Salad: this.state.ingredients.Salad,
-				Bacon: this.state.ingredients.Bacon,
-				Cheese: this.state.ingredients.Cheese,
-				Meat: this.state.ingredients.Meat
-			},
+		let ingredients = {
+			...this.state.ingredients,
 			totalPrice: this.state.totalPrice
 		};
-
-		axios
-			.post("/orders.json", { order })
-			.then(res => {
-				this.setState({
-					isLoading: false,
-					paying: false
-				});
-			})
-			.catch(err => {
-				this.setState({
-					isLoading: false,
-					paying: false
-				});
-			});
+		this.props.history.push({
+			pathname: "/checkout",
+			search: new URLSearchParams(ingredients).toString()
+		});
 	};
 
 	render() {
@@ -138,6 +127,10 @@ class BurgerBuilder extends Component {
 					paymentStarted={this.startPaymentHandler}
 				/>
 			</Auxiliary>
+		) : this.state.isError ? (
+			<p style={{ fontWeight: "700", textAlign: "center" }}>
+				{this.state.errorMessage}
+			</p>
 		) : (
 			<Loader />
 		);
