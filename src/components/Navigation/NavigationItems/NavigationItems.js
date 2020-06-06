@@ -8,8 +8,10 @@ import NavigationItem from "./NavigationItem/NavigationItem";
 
 const NavigationItems = props => (
 	<ul className={styleNI.NavigationItems}>
-		<NavigationItem active="true">Prepare Burger</NavigationItem>
-		<NavigationItem>Checkout</NavigationItem>
+		<NavigationItem to="/" exact>
+			Prepare Burger
+		</NavigationItem>
+		<NavigationItem to="/order">Order</NavigationItem>
 	</ul>
 );
 

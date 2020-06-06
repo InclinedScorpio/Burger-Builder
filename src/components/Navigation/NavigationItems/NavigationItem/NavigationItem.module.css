@@ -25,6 +25,10 @@
 		background-color: #8f5c2c;
 		border-bottom: 3px solid #40a4c8;
 	}
+	.NavigationItem .active {
+		color: white;
+		border-bottom: 6px solid blue;
+	}
 }
 
 /*MOBILE========================================*/
@@ -59,7 +63,7 @@
 		color: white;
 		background-color: #ffa01b;
 	}
-	.NavigationItem .a {
+	.NavigationItem .active {
 		color: #ffa01b;
 		border-left: 6px solid blue;
 	}
