@@ -1,0 +1,45 @@
+.Input {
+	width: 100%;
+	font: inherit;
+	display: block;
+	box-sizing: border-box;
+	margin-top: 18px;
+}
+
+.Input .InputElement {
+	width: 70%;
+	height: 40px;
+	padding: 1px 6px;
+	margin: 1px auto;
+	box-sizing: border-box;
+	display: inline-block;
+	outline: none;
+	font-size: medium;
+	border: none;
+	border-bottom: 2px solid gainsboro;
+	background-color: inherit;
+}
+
+.Input .InputElement:focus {
+	outline: none;
+	background-color: rgb(255, 247, 247);
+}
+
+.Input .Label {
+	font: inherit;
+	font-weight: 400;
+	display: block;
+	/* box-sizing: border-box; */
+}
+
+.Input .Error {
+	border: 2px solid rgb(255, 65, 65);
+	background-color: rgb(255, 172, 172);
+}
+
+/*MOBILE========================================*/
+@media (max-width: 800px) {
+	.Input .InputElement {
+		width: 80%;
+	}
+}

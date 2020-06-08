@@ -32,6 +32,24 @@
 	color: #4e2007;
 }
 
+.Button.Disabled {
+	color: black;
+	height: 30px;
+	padding: 5px;
+	background-color: #cfcece;
+	box-sizing: border-box;
+	box-shadow: 0px 3px 4px grey;
+}
+
+.Button.Disabled:hover {
+	color: rgb(46, 45, 45);
+	height: 30px;
+	padding: 5px;
+	background-color: #cfcece;
+	box-sizing: border-box;
+	cursor: auto;
+}
+
 .Hide {
 	display: none;
 }

@@ -10,11 +10,18 @@ import styleBtn from "./Button.module.css";
  * @param {successBtnVisible} bool|optional
  */
 const Button = props => {
+	let styleClasses = [styleBtn.Button, styleBtn[props.btnType]];
+
+	if (props.disabled) {
+		styleClasses.push(styleBtn.Disabled);
+	}
+
 	return (
 		props.successBtnVisible && (
 			<button
-				className={[styleBtn.Button, styleBtn[props.btnType]].join(" ")}
+				className={styleClasses.join(" ")}
 				onClick={props.clicked}
+				disabled={props.disabled}
 			>
 				{props.children}
 			</button>
@@ -23,7 +30,8 @@ const Button = props => {
 };
 
 Button.defaultProps = {
-	successBtnVisible: true
+	successBtnVisible: true,
+	disabled: false
 };
 
 export default Button;

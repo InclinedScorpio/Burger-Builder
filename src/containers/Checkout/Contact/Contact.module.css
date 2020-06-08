@@ -1,29 +1,30 @@
 .Contact {
-	width: 100%;
-}
-
-.Contact input {
-	width: 50%;
-	height: 30px;
-	margin: 4px;
-	padding: 3px;
-	box-sizing: border-box;
-	border: none;
-	border-bottom: 1px solid rgb(185, 185, 185);
+	width: 60%;
+	margin: 0px auto;
+	margin-bottom: 10px;
 }
 
 .Contact button {
 	text-align: center;
-	background-color: rgb(255, 212, 181);
-	box-shadow: 0px 5px 7px grey;
+	/* background-color: ; */
+	/* box-shadow: 0px 5px/ 7px grey; */
 	margin: auto;
 	padding: 0px;
-	border: 10px solid rgb(255, 212, 181);
+	/* border: px solid rgb(224, 255, 167); */
 	margin: 8px;
 }
 
 .Contact form {
 	padding: 10px 10px;
+	width: 80%;
+	margin: 2px auto;
+	border: 10px solid rgb(207, 206, 206);
+	border-top-style: ridge;
+	background-color: rgb(255, 255, 240);
+}
 
-	width: 100%;
+@media (max-width: 800px) {
+	.Contact {
+		width: 100%;
+	}
 }

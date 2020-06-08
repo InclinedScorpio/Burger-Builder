@@ -3,7 +3,6 @@ import React from "react";
 import styleOrder from "./Order.module.css";
 
 const Order = props => {
-	console.log("props are@@@@", props);
 	let ingredients = [];
 
 	for (let key in props.order.order.ingredients) {
