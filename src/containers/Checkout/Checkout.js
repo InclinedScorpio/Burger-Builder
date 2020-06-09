@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Route } from "react-router-dom";
+import { connect } from "react-redux";
 
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
 import Spinner from "../../components/UI/Loader/Loader";
@@ -7,28 +8,26 @@ import Contact from "./Contact/Contact";
 
 class Checkout extends Component {
 	state = {
-		ingredients: null,
-		successBtnVisible: true,
-		totalPrice: null
+		successBtnVisible: true
 	};
 
 	componentDidMount() {
-		let query = new URLSearchParams(this.props.location.search);
-		let ingredients = {};
-		let totalPrice = 0;
-		query.forEach((value, key) => {
-			if (key == "totalPrice") {
-				totalPrice = parseInt(value);
-			} else {
-				ingredients[key] = parseInt(value);
-			}
-		});
-		this.setState({
-			ingredients: { ...ingredients },
-			totalPrice: totalPrice,
-			successBtnVisible:
-				this.props.location.pathname == "/checkout" ? true : false
-		});
+		// let query = new URLSearchParams(this.props.location.search);
+		// let ingredients = {};
+		// let totalPrice = 0;
+		// query.forEach((value, key) => {
+		// 	if (key == "totalPrice") {
+		// 		totalPrice = parseInt(value);
+		// 	} else {
+		// 		ingredients[key] = parseInt(value);
+		// 	}
+		// });
+		// this.setState({
+		// 	ingredients: { ...ingredients },
+		// 	totalPrice: totalPrice,
+		// 	successBtnVisible:
+		// 		this.props.location.pathname == "/checkout" ? true : false
+		// });
 	}
 
 	backClickHandler = () => {
@@ -48,9 +47,9 @@ class Checkout extends Component {
 		console.log("State::", this.state);
 		return (
 			<div>
-				{this.state.ingredients ? (
+				{this.props.ingredients ? (
 					<CheckoutSummary
-						ingredients={this.state.ingredients}
+						ingredients={this.props.ingredients}
 						backClicked={this.backClickHandler}
 						proceedClicked={this.proceedClickHandler}
 						successBtnVisible={this.state.successBtnVisible}
@@ -63,8 +62,8 @@ class Checkout extends Component {
 						path={this.props.match.url + "/contact"}
 						render={() => (
 							<Contact
-								ingredients={this.state.ingredients}
-								totalPrice={this.state.totalPrice}
+								ingredients={this.props.ingredients}
+								totalPrice={this.props.totalPrice}
 							/>
 						)}
 					/>
@@ -74,4 +73,11 @@ class Checkout extends Component {
 	}
 }
 
-export default Checkout;
+const mapStateToProps = state => {
+	return {
+		ingredients: state.ingredients,
+		totalPrice: state.totalPrice
+	};
+};
+
+export default connect(mapStateToProps)(Checkout);
