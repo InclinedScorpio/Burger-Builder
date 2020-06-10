@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import axios from "../../axiosOrders";
 import axiosInstance from "axios";
 import { connect } from "react-redux";
-import * as actionTypes from "../../store/action";
+import * as actionCreator from "../../store/actions/index";
 
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import Auxiliary from "../../hoc/Auxiliary/Auxiliary";
@@ -106,7 +106,6 @@ class BurgerBuilder extends Component {
 }
 
 const mapStateToProps = state => {
-	console.log("STATE $$$$", state);
 	return {
 		ingredients: state.ingredients,
 		totalPrice: state.totalPrice
@@ -116,15 +115,9 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
 	return {
 		add_ingredients: ingredient =>
-			dispatch({
-				type: actionTypes.ADD_INGREDIENTS,
-				payload: { ingredient: ingredient }
-			}),
+			dispatch(actionCreator.addIngredient(ingredient)),
 		remove_ingredients: ingredient =>
-			dispatch({
-				type: actionTypes.REMOVE_INGREDIENTS,
-				payload: { ingredient: ingredient }
-			})
+			dispatch(actionCreator.removeIngredient(ingredient))
 	};
 };
 
