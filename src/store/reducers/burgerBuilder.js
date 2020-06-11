@@ -15,42 +15,53 @@ const initialState = {
 
 let stateChanges = null;
 
+const addIngredients = (state, action) => {
+	stateChanges = {
+		ingredients: {
+			...state.ingredients,
+			[action.payload.ingredient]:
+				state.ingredients[action.payload.ingredient] + 1
+		},
+		totalPrice: state.totalPrice + price[action.payload.ingredient]
+	};
+	return updateObject(state, stateChanges);
+};
+
+const removeIngredients = (state, action) => {
+	stateChanges = {
+		ingredients: {
+			...state.ingredients,
+			[action.payload.ingredient]:
+				state.ingredients[action.payload.ingredient] - 1
+		},
+		totalPrice: state.totalPrice - price[action.payload.ingredient]
+	};
+	return updateObject(state, stateChanges);
+};
+
+const initIngredients = (state, action) => {
+	console.log("Inside reducers-- action :", action);
+	stateChanges = {
+		ingredients: {
+			Salad: action.payload.ingredients.Salad,
+			Bacon: action.payload.ingredients.Bacon,
+			Cheese: action.payload.ingredients.Cheese,
+			Meat: action.payload.ingredients.Meat
+		}
+	};
+	return updateObject(state, stateChanges);
+};
+
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case actionTypes.ADD_INGREDIENTS:
-			stateChanges = {
-				ingredients: {
-					...state.ingredients,
-					[action.payload.ingredient]:
-						state.ingredients[action.payload.ingredient] + 1
-				},
-				totalPrice: state.totalPrice + price[action.payload.ingredient]
-			};
-			return updateObject(state, stateChanges);
+			return addIngredients(state, action);
 
 		case actionTypes.REMOVE_INGREDIENTS:
-			stateChanges = {
-				ingredients: {
-					...state.ingredients,
-					[action.payload.ingredient]:
-						state.ingredients[action.payload.ingredient] - 1
-				},
-				totalPrice: state.totalPrice - price[action.payload.ingredient]
-			};
-			return updateObject(state, stateChanges);
+			return removeIngredients(state, action);
 
 		case actionTypes.INIT_INGREDIENTS:
-			console.log("Inside reducers-- action :", action);
-			stateChanges = {
-				ingredients: {
-					Salad: action.payload.ingredients.Salad,
-					Bacon: action.payload.ingredients.Bacon,
-					Cheese: action.payload.ingredients.Cheese,
-					Meat: action.payload.ingredients.Meat
-				}
-			};
-			console.log("state changes:::", stateChanges);
-			return updateObject(state, stateChanges);
+			return initIngredients(state, action);
 
 		default:
 			return state;
