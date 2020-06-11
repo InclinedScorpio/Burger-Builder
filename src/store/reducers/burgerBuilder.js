@@ -1,4 +1,5 @@
 import * as actionTypes from "../actions/actionTypes";
+import { updateObject } from "../utilities";
 
 const price = {
 	Salad: 2.3,
@@ -8,20 +9,16 @@ const price = {
 };
 
 const initialState = {
-	ingredients: {
-		Bacon: 0,
-		Cheese: 0,
-		Meat: 0,
-		Salad: 0
-	},
+	ingredients: null,
 	totalPrice: 12
 };
+
+let stateChanges = null;
 
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case actionTypes.ADD_INGREDIENTS:
-			return {
-				...state,
+			stateChanges = {
 				ingredients: {
 					...state.ingredients,
 					[action.payload.ingredient]:
@@ -29,9 +26,10 @@ const reducer = (state = initialState, action) => {
 				},
 				totalPrice: state.totalPrice + price[action.payload.ingredient]
 			};
+			return updateObject(state, stateChanges);
+
 		case actionTypes.REMOVE_INGREDIENTS:
-			return {
-				...state,
+			stateChanges = {
 				ingredients: {
 					...state.ingredients,
 					[action.payload.ingredient]:
@@ -39,6 +37,21 @@ const reducer = (state = initialState, action) => {
 				},
 				totalPrice: state.totalPrice - price[action.payload.ingredient]
 			};
+			return updateObject(state, stateChanges);
+
+		case actionTypes.INIT_INGREDIENTS:
+			console.log("Inside reducers-- action :", action);
+			stateChanges = {
+				ingredients: {
+					Salad: action.payload.ingredients.Salad,
+					Bacon: action.payload.ingredients.Bacon,
+					Cheese: action.payload.ingredients.Cheese,
+					Meat: action.payload.ingredients.Meat
+				}
+			};
+			console.log("state changes:::", stateChanges);
+			return updateObject(state, stateChanges);
+
 		default:
 			return state;
 	}

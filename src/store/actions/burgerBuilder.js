@@ -13,3 +13,10 @@ export const removeIngredient = ingredient => {
 		payload: { ingredient: ingredient }
 	};
 };
+
+export const initIngredients = ingredients => {
+	return {
+		type: actionTypes.INIT_INGREDIENTS,
+		payload: { ingredients: ingredients }
+	};
+};

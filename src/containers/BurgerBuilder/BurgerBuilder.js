@@ -22,19 +22,20 @@ class BurgerBuilder extends Component {
 	};
 
 	componentDidMount = () => {
-		// axiosInstance
-		// 	.get("https://tech-burger.firebaseio.com/ingredients.json")
-		// 	.then(res => {
-		// 		this.setState({
-		// 			ingredients: res.data
-		// 		});
-		// 	})
-		// 	.catch(err => {
-		// 		this.setState({
-		// 			isError: true,
-		// 			errorMessage: err.message
-		// 		});
-		// 	});
+		console.log("[BurgerBuilder.js]:ComponentDidMount");
+		if (this.props.ingredients == null) {
+			axiosInstance
+				.get("https://tech-burger.firebaseio.com/ingredients.json")
+				.then(res => {
+					this.props.initIngredients(res.data);
+				})
+				.catch(err => {
+					this.setState({
+						isError: true,
+						errorMessage: err.message
+					});
+				});
+		}
 	};
 
 	startPaymentHandler = () => {
@@ -117,7 +118,9 @@ const mapDispatchToProps = dispatch => {
 		add_ingredients: ingredient =>
 			dispatch(actionCreator.addIngredient(ingredient)),
 		remove_ingredients: ingredient =>
-			dispatch(actionCreator.removeIngredient(ingredient))
+			dispatch(actionCreator.removeIngredient(ingredient)),
+		initIngredients: ingredients =>
+			dispatch(actionCreator.initIngredients(ingredients))
 	};
 };
 
