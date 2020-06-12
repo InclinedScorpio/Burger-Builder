@@ -10,7 +10,9 @@ const price = {
 
 const initialState = {
 	ingredients: null,
-	totalPrice: 12
+	totalPrice: 12,
+	isError: false,
+	errorMessage: ""
 };
 
 let stateChanges = null;
@@ -39,7 +41,7 @@ const removeIngredients = (state, action) => {
 	return updateObject(state, stateChanges);
 };
 
-const initIngredients = (state, action) => {
+const setIngredients = (state, action) => {
 	console.log("Inside reducers-- action :", action);
 	stateChanges = {
 		ingredients: {
@@ -47,9 +49,18 @@ const initIngredients = (state, action) => {
 			Bacon: action.payload.ingredients.Bacon,
 			Cheese: action.payload.ingredients.Cheese,
 			Meat: action.payload.ingredients.Meat
-		}
+		},
+		isError: false,
+		errorMessage: ""
 	};
 	return updateObject(state, stateChanges);
+};
+
+const fetchIngredientsFailed = (state, action) => {
+	return updateObject(state, {
+		isError: true,
+		errorMessage: action.payload.errorMessage
+	});
 };
 
 const reducer = (state = initialState, action) => {
@@ -60,8 +71,11 @@ const reducer = (state = initialState, action) => {
 		case actionTypes.REMOVE_INGREDIENTS:
 			return removeIngredients(state, action);
 
-		case actionTypes.INIT_INGREDIENTS:
-			return initIngredients(state, action);
+		case actionTypes.SET_INGREDIENTS:
+			return setIngredients(state, action);
+
+		case actionTypes.FETCH_INGREDIENTS_FAILED:
+			return fetchIngredientsFailed(state, action);
 
 		default:
 			return state;

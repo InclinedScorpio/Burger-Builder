@@ -5,11 +5,11 @@ import styleOrder from "./Order.module.css";
 const Order = props => {
 	let ingredients = [];
 
-	for (let key in props.order.order.ingredients) {
+	for (let key in props.order.ingredients) {
 		// console.log("Key", key, "Value", props.order.order.ingredients[key]);
 		ingredients.push({
 			key: key,
-			amount: props.order.order.ingredients[key]
+			amount: props.order.ingredients[key]
 		});
 	}
 	console.log("EEEEE", ingredients);
@@ -28,9 +28,7 @@ const Order = props => {
 				})}
 			<div>
 				PRICE :{" "}
-				<strong>
-					{Number.parseFloat(props.order.order.totalPrice).toFixed(2)}$
-				</strong>
+				<strong>{Number.parseFloat(props.order.totalPrice).toFixed(2)}$</strong>
 			</div>
 		</div>
 	);

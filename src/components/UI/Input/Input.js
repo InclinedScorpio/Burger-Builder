@@ -46,8 +46,12 @@ const Input = props => {
 						{...props.config}
 						onChange={props.inputChanged}
 					>
-						{props.config.options.map(opt => {
-							return <option value={opt.value}>{opt.label}</option>;
+						{props.config.options.map((opt, index) => {
+							return (
+								<Auxiliary key={index}>
+									<option value={opt.value}>{opt.label}</option>
+								</Auxiliary>
+							);
 						})}
 					</select>
 				</Auxiliary>

@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import axios from "../../axiosOrders";
 import axiosInstance from "axios";
 import { connect } from "react-redux";
 import * as actionCreator from "../../store/actions/index";
-
+import axios from "../../axiosOrders";
 import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import Auxiliary from "../../hoc/Auxiliary/Auxiliary";
 import Burger from "../../components/Burger/Burger";
@@ -16,26 +15,25 @@ class BurgerBuilder extends Component {
 	state = {
 		ingredientsChoosen: 0,
 		paying: false,
-		isLoading: false,
-		isError: false,
-		errorMessage: ""
+		isLoading: false
 	};
 
 	componentDidMount = () => {
 		console.log("[BurgerBuilder.js]:ComponentDidMount");
-		if (this.props.ingredients == null) {
-			axiosInstance
-				.get("https://tech-burger.firebaseio.com/ingredients.json")
-				.then(res => {
-					this.props.initIngredients(res.data);
-				})
-				.catch(err => {
-					this.setState({
-						isError: true,
-						errorMessage: err.message
-					});
-				});
-		}
+		this.props.initIngredients();
+		// if (this.props.ingredients == null) {
+		// 	axiosInstance
+		// 		.get("https://tech-burger.firebaseio.com/ingredients.json")
+		// 		.then(res => {
+		// 			this.props.initIngredients(res.data);
+		// 		})
+		// 		.catch(err => {
+		// 			this.setState({
+		// 				isError: true,
+		// 				errorMessage: err.message
+		// 			});
+		// 		});
+		// }
 	};
 
 	startPaymentHandler = () => {
@@ -96,9 +94,9 @@ class BurgerBuilder extends Component {
 					paymentStarted={this.startPaymentHandler}
 				/>
 			</Auxiliary>
-		) : this.state.isError ? (
+		) : this.props.isError ? (
 			<p style={{ fontWeight: "700", textAlign: "center" }}>
-				{this.state.errorMessage}
+				{this.props.errorMessage}
 			</p>
 		) : (
 			<Loader />
@@ -108,8 +106,10 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => {
 	return {
-		ingredients: state.ingredients,
-		totalPrice: state.totalPrice
+		ingredients: state.burger.ingredients,
+		totalPrice: state.burger.totalPrice,
+		isError: state.burger.isError,
+		errorMessage: state.burger.errorMessage
 	};
 };
 
@@ -119,8 +119,7 @@ const mapDispatchToProps = dispatch => {
 			dispatch(actionCreator.addIngredient(ingredient)),
 		remove_ingredients: ingredient =>
 			dispatch(actionCreator.removeIngredient(ingredient)),
-		initIngredients: ingredients =>
-			dispatch(actionCreator.initIngredients(ingredients))
+		initIngredients: () => dispatch(actionCreator.initIngredients())
 	};
 };
 

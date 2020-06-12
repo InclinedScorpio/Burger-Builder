@@ -1,11 +1,15 @@
 import React, { Component } from "react";
-import { withRouter } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import { compose } from "redux";
+import { connect } from "react-redux";
 
 import Button from "../../../components/UI/Button/Button";
 import Spinner from "../../../components/UI/Loader/Loader";
 import axios from "../../../axiosOrders";
 import styleContact from "./Contact.module.css";
 import Input from "../../../components/UI/Input/Input";
+import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
+import * as actionCreators from "../../../store/actions/index";
 
 class Contact extends Component {
 	state = {
@@ -90,10 +94,6 @@ class Contact extends Component {
 	placeOrderHandle = event => {
 		event.preventDefault();
 
-		this.setState({
-			isLoading: true
-		});
-
 		const order = {
 			ingredients: {
 				Salad: this.props.ingredients.Salad,
@@ -108,20 +108,7 @@ class Contact extends Component {
 			deliveryMethod: this.state.formData.delivery_method.value
 		};
 
-		axios
-			.post("/orders.json", { order })
-			.then(res => {
-				this.setState({
-					isLoading: false
-				});
-				this.props.history.replace("/");
-			})
-			.catch(err => {
-				this.setState({
-					isLoading: false
-				});
-				window.alert(err.message);
-			});
+		this.props.onburgerPurchased(order);
 	};
 
 	validationHandler = (value, constraints) => {
@@ -210,11 +197,18 @@ class Contact extends Component {
 				this.state.formData[key].isValid;
 		}
 
+		let redirectToBurgerBuilder = "";
+		if (this.props.purchased || this.props.orders) {
+			this.props.onBurgerPurchased();
+			redirectToBurgerBuilder = <Redirect to="/" />;
+		}
+
 		return (
 			<div className={styleContact.Contact}>
+				{redirectToBurgerBuilder}
 				<form onSubmit={this.placeOrderHandle}>
 					<h2>Please fill Contact Details</h2>
-					{this.state.isLoading ? (
+					{this.props.isLoading ? (
 						<Spinner />
 					) : (
 						<div>
@@ -244,4 +238,23 @@ class Contact extends Component {
 	}
 }
 
-export default withRouter(Contact);
+const mapStateToProps = state => {
+	return {
+		isLoading: state.order.isLoading,
+		purchased: state.order.purchased,
+		ingredients: state.burger.ingredients
+	};
+};
+
+const mapDispatchToProps = dispatch => {
+	return {
+		onburgerPurchased: postData =>
+			dispatch(actionCreators.purchaseBurger(postData)),
+		onBurgerPurchased: () => dispatch(actionCreators.burgerPurchaseCompleted())
+	};
+};
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(withErrorHandler(Contact, axios));
