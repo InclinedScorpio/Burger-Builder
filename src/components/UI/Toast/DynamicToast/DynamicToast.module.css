@@ -1,0 +1,13 @@
+.DynamicToast {
+	position: "sticky";
+	bottom: "5";
+	margin: "0 auto";
+}
+
+.DynamicToast .FontMedium {
+	font-size: medium;
+}
+
+.DynamicToast .FontLarge {
+	font-size: large;
+}

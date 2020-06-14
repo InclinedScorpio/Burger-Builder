@@ -1,9 +1,11 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import Button from "../../components/UI/Button/Button";
 import Spinner from "../../components/UI/Loader/Loader";
 import Input from "../../components/UI/Input/Input";
-
+import Toast from "../../components/UI/Toast/DynamicToast/DynamicToast";
+import * as action from "../../store/actions/index";
 import styleAuth from "./Auth.module.css";
 
 class Auth extends Component {
@@ -42,7 +44,8 @@ class Auth extends Component {
 				isTouched: false,
 				errorMessage: null
 			}
-		}
+		},
+		isSignup: true
 	};
 
 	validationHandler = (value, constraints) => {
@@ -136,6 +139,23 @@ class Auth extends Component {
 		});
 	};
 
+	submitFormHandler = event => {
+		event.preventDefault();
+		let submissionData = {
+			email: this.state.controls.email.value,
+			password: this.state.controls.password.value
+		};
+		this.props.onAuthCheck(submissionData, this.state.isSignup);
+	};
+
+	authStatusChangeHandler = () => {
+		this.setState(prevState => {
+			return {
+				isSignup: !prevState.isSignup
+			};
+		});
+	};
+
 	render() {
 		let isSubmissionActive = true;
 		let inputElements = [];
@@ -154,8 +174,9 @@ class Auth extends Component {
 
 		return (
 			<div className={styleAuth.Auth}>
-				<form onSubmit={this.placeOrderHandle}>
-					<h1>Sign-in </h1>
+				<form onSubmit={this.submitFormHandler} className={styleAuth.Form}>
+					<h1>{this.state.isSignup ? "Sign-up" : "Sign-in"}</h1>
+
 					<h5>Tech Burger Shop</h5>
 
 					{this.props.isLoading ? (
@@ -182,10 +203,41 @@ class Auth extends Component {
 							</div>
 						</div>
 					)}
+					<h4
+						onClick={this.authStatusChangeHandler}
+						style={{ cursor: "pointer" }}
+					>
+						Would like to {this.state.isSignup ? "Sign-in" : "Sign-up"} ?
+					</h4>
 				</form>
+				{this.props.isError && (
+					<Toast
+						config={{
+							type: "error",
+							message: this.props.errorMessage,
+							time: 4000
+						}}
+						hideToast={this.props.onRemoveErrors}
+					/>
+				)}
 			</div>
 		);
 	}
 }
 
-export default Auth;
+const mapDispatchToProps = dispatch => {
+	return {
+		onAuthCheck: (data, isSignup) => dispatch(action.authCheck(data, isSignup)),
+		onRemoveErrors: () => dispatch(action.removeError())
+	};
+};
+
+const mapStateToProps = state => {
+	return {
+		isLoading: state.auth.loading,
+		isError: state.auth.isError,
+		errorMessage: state.auth.errorMessage
+	};
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Auth);

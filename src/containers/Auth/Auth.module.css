@@ -1,9 +1,12 @@
 .Auth {
-	width: 50%;
+	width: 100%;
 	margin: 60px auto;
 	margin-bottom: 10px;
 	text-align: center;
 	margin-top: 10%;
+}
+.Auth .Form {
+	width: 50%;
 }
 
 .Auth button {
@@ -29,5 +32,8 @@
 @media (max-width: 800px) {
 	.Auth {
 		width: 100%;
+	}
+	.Auth .Form {
+		width: 90%;
 	}
 }
