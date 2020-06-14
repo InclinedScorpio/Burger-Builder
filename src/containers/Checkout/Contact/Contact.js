@@ -108,7 +108,7 @@ class Contact extends Component {
 			deliveryMethod: this.state.formData.delivery_method.value
 		};
 
-		this.props.onburgerPurchased(order);
+		this.props.onburgerPurchased(order, this.props.token);
 	};
 
 	validationHandler = (value, constraints) => {
@@ -199,7 +199,7 @@ class Contact extends Component {
 
 		let redirectToBurgerBuilder = "";
 		if (this.props.purchased || this.props.orders) {
-			this.props.onBurgerPurchased();
+			this.props.onBurgerPurchaseCompleted();
 			redirectToBurgerBuilder = <Redirect to="/" />;
 		}
 
@@ -242,15 +242,17 @@ const mapStateToProps = state => {
 	return {
 		isLoading: state.order.isLoading,
 		purchased: state.order.purchased,
-		ingredients: state.burger.ingredients
+		ingredients: state.burger.ingredients,
+		token: state.auth.token
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onburgerPurchased: postData =>
-			dispatch(actionCreators.purchaseBurger(postData)),
-		onBurgerPurchased: () => dispatch(actionCreators.burgerPurchaseCompleted())
+		onburgerPurchased: (postData, token) =>
+			dispatch(actionCreators.purchaseBurger(postData, token)),
+		onBurgerPurchaseCompleted: () =>
+			dispatch(actionCreators.burgerPurchaseCompleted())
 	};
 };
 

@@ -1,22 +1,22 @@
-import * as importTypes from "./actionTypes";
+import * as actionTypes from "./actionTypes";
 import axios from "axios";
 
 const authStart = () => {
 	return {
-		type: importTypes.AUTHCHECK_START
+		type: actionTypes.AUTHCHECK_START
 	};
 };
 
 const authSuccess = data => {
 	return {
-		type: importTypes.AUTH_SUCCESS,
+		type: actionTypes.AUTH_SUCCESS,
 		payload: { token: data.idToken, userId: data.localId }
 	};
 };
 
 const authFailed = error => {
 	return {
-		type: importTypes.AUTH_FAILED,
+		type: actionTypes.AUTH_FAILED,
 		payload: { errorMessage: error }
 	};
 };
@@ -46,6 +46,16 @@ export const authCheck = (data, isSignup) => {
 
 export const removeError = () => {
 	return {
-		type: importTypes.REMOVE_ERRORS
+		type: actionTypes.REMOVE_ERRORS
+	};
+};
+
+export const signout = timeoutDuration => {
+	return dispatch => {
+		setTimeout(() => {
+			return {
+				type: actionTypes.SIGNOUT
+			};
+		}, timeoutDuration * 1000);
 	};
 };

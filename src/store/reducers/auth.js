@@ -6,9 +6,7 @@ const initialState = {
 	userId: null,
 	loading: false,
 	isError: false,
-	errorMessage: "",
-	isSuccess: false,
-	successMessage: ""
+	errorMessage: ""
 };
 
 const signupStart = state => {
@@ -55,6 +53,9 @@ const reducers = (state = initialState, action) => {
 
 		case actionTypes.REMOVE_ERRORS:
 			return removeErrors(state, action);
+
+		case actionTypes.SIGNOUT:
+			return signupFailed(state, action);
 
 		default:
 			return state;

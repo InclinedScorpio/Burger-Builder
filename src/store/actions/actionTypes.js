@@ -13,3 +13,4 @@ export const AUTHCHECK_START = "AUTHCHECK_START";
 export const AUTH_SUCCESS = "AUTH_SUCCESS";
 export const AUTH_FAILED = "AUTH_FAILED";
 export const REMOVE_ERRORS = "REMOVE_ERRORS";
+export const SIGNOUT = "SIGNOUT";

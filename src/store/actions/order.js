@@ -26,11 +26,11 @@ export const burgerPurchaseCompleted = () => {
 	};
 };
 
-export const purchaseBurger = postData => {
+export const purchaseBurger = (postData, token) => {
 	return dispatch => {
 		dispatch(burgerPurchaseStarted());
 		axios
-			.post("/orders.json", { postData })
+			.post("/orders.json?auth=" + token, { postData })
 			.then(res => {
 				console.log("[Order Reducer]: purchaseBurger, res", res.data.name);
 				dispatch(
