@@ -60,6 +60,7 @@ const Input = props => {
 		default:
 			inputElement = (
 				<Auxiliary>
+					<label>{props.errorMessage}</label>
 					<input
 						type="text"
 						className={inputClasses.join(" ")}

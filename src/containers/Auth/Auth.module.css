@@ -1,0 +1,33 @@
+.Auth {
+	width: 50%;
+	margin: 60px auto;
+	margin-bottom: 10px;
+	text-align: center;
+	margin-top: 10%;
+}
+
+.Auth button {
+	text-align: center;
+	font-size: medium;
+	/* background-color: ; */
+	/* box-shadow: 0px 5px/ 7px grey; */
+	margin: 25px auto;
+	padding: 0px;
+	width: 100px;
+	/* border: px solid rgb(224, 255, 167); */
+}
+
+.Auth form {
+	padding: 10px 10px;
+	width: 80%;
+	margin: 2px auto;
+	border: 10px solid rgb(207, 206, 206);
+	border-top-style: ridge;
+	background-color: rgb(255, 255, 240);
+}
+
+@media (max-width: 800px) {
+	.Auth {
+		width: 100%;
+	}
+}
