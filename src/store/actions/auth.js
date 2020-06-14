@@ -53,9 +53,7 @@ export const removeError = () => {
 export const signout = timeoutDuration => {
 	return dispatch => {
 		setTimeout(() => {
-			return {
-				type: actionTypes.SIGNOUT
-			};
+			dispatch({ type: actionTypes.SIGNOUT });
 		}, timeoutDuration * 1000);
 	};
 };

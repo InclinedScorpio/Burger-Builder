@@ -33,6 +33,12 @@ const signupFailed = (state, action) => {
 	});
 };
 
+const signout = state => {
+	return updateObject(state, {
+		...initialState
+	});
+};
+
 const removeErrors = (state, action) => {
 	return updateObject(state, {
 		isError: false,
@@ -55,7 +61,7 @@ const reducers = (state = initialState, action) => {
 			return removeErrors(state, action);
 
 		case actionTypes.SIGNOUT:
-			return signupFailed(state, action);
+			return signout(state);
 
 		default:
 			return state;

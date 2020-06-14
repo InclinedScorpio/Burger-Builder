@@ -12,7 +12,11 @@ const NavigationItems = props => (
 			Prepare Burger
 		</NavigationItem>
 		<NavigationItem to="/order">Order</NavigationItem>
-		<NavigationItem to="/auth">Auth</NavigationItem>
+		{!props.isAuthenticated ? (
+			<NavigationItem to="/auth">Signup | Signin</NavigationItem>
+		) : (
+			<NavigationItem to="/signout">Signout</NavigationItem>
+		)}
 	</ul>
 );
 

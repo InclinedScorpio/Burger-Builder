@@ -20,7 +20,7 @@ const SideDrawer = props => {
 			<div className={styleSD.Logo}>
 				<Logo />
 			</div>
-			<NavigationItems />
+			<NavigationItems isAuthenticated={props.isAuthenticated} />
 		</div>
 	);
 };

@@ -6,4 +6,4 @@ export {
 
 export { purchaseBurger, burgerPurchaseCompleted } from "./order";
 
-export { authCheck, removeError } from "./auth";
+export { authCheck, removeError, signout } from "./auth";
