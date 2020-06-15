@@ -11,7 +11,9 @@ const NavigationItems = props => (
 		<NavigationItem to="/" exact>
 			Prepare Burger
 		</NavigationItem>
-		<NavigationItem to="/order">Order</NavigationItem>
+		{props.isAuthenticated && (
+			<NavigationItem to="/order">Order</NavigationItem>
+		)}
 		{!props.isAuthenticated ? (
 			<NavigationItem to="/auth">Signup | Signin</NavigationItem>
 		) : (

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 import Button from "../../components/UI/Button/Button";
 import Spinner from "../../components/UI/Loader/Loader";
@@ -48,6 +49,17 @@ class Auth extends Component {
 		isSignup: true
 	};
 
+	componentDidMount = () => {
+		let query = new URLSearchParams(this.props.location.search);
+
+		query.forEach((value, key) => {
+			console.log("Key/Value::", key, value);
+			if (key == "signup" && value == "false") {
+				this.authStatusChangeHandler();
+			}
+		});
+	};
+
 	validationHandler = (value, constraints) => {
 		if (constraints.required) {
 			if (value.trim() == "") {
@@ -91,7 +103,6 @@ class Auth extends Component {
 				};
 			}
 		}
-
 		if (constraints.in) {
 			if (!constraints.in.includes(value)) {
 				return {
@@ -143,15 +154,23 @@ class Auth extends Component {
 		event.preventDefault();
 		let submissionData = {
 			email: this.state.controls.email.value,
-			password: this.state.controls.password.value
+			password: this.state.controls.password.value,
+			returnSecureToken: true
 		};
 		this.props.onAuthCheck(submissionData, this.state.isSignup);
 	};
 
 	authStatusChangeHandler = () => {
+		let controls = { ...this.state.controls };
+
+		for (const key in controls) {
+			if (controls[key].value == "") controls[key].isTouched = false;
+		}
+
 		this.setState(prevState => {
 			return {
-				isSignup: !prevState.isSignup
+				isSignup: !prevState.isSignup,
+				controls: controls
 			};
 		});
 	};
@@ -172,8 +191,18 @@ class Auth extends Component {
 				this.state.controls[key].isValid;
 		}
 
+		let redirectAvailable = null;
+		if (this.props.isAuthenticated) {
+			if (this.props.isBurgeBuildingStarted) {
+				redirectAvailable = <Redirect to="/checkout" />;
+			} else {
+				redirectAvailable = <Redirect to="/" />;
+			}
+		}
+
 		return (
 			<div className={styleAuth.Auth}>
+				{redirectAvailable}
 				<form onSubmit={this.submitFormHandler} className={styleAuth.Form}>
 					<h1>{this.state.isSignup ? "Sign-up" : "Sign-in"}</h1>
 
@@ -236,7 +265,9 @@ const mapStateToProps = state => {
 	return {
 		isLoading: state.auth.loading,
 		isError: state.auth.isError,
-		errorMessage: state.auth.errorMessage
+		errorMessage: state.auth.errorMessage,
+		isAuthenticated: state.auth.token ? true : false,
+		isBurgeBuildingStarted: state.burger.burgerBuildingStarted
 	};
 };
 

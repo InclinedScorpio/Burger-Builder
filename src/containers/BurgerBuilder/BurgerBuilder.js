@@ -21,6 +21,7 @@ class BurgerBuilder extends Component {
 	componentDidMount = () => {
 		console.log("[BurgerBuilder.js]:ComponentDidMount");
 		this.props.initIngredients();
+
 		// if (this.props.ingredients == null) {
 		// 	axiosInstance
 		// 		.get("https://tech-burger.firebaseio.com/ingredients.json")
@@ -37,9 +38,14 @@ class BurgerBuilder extends Component {
 	};
 
 	startPaymentHandler = () => {
-		this.setState({
-			paying: true
-		});
+		if (this.props.isAuthenticated) {
+			this.setState({
+				paying: true
+			});
+		} else {
+			this.props.onburgerBuildingStarted();
+			this.props.history.push("/auth?signup=false");
+		}
 	};
 
 	cancelPaymentHandler = () => {
@@ -92,6 +98,7 @@ class BurgerBuilder extends Component {
 					isCheckoutAvailable={this.isCheckoutAvailable(this.props.ingredients)}
 					priceToPay={this.props.totalPrice}
 					paymentStarted={this.startPaymentHandler}
+					isAuthenticated={this.props.isAuthenticated}
 				/>
 			</Auxiliary>
 		) : this.props.isError ? (
@@ -109,7 +116,8 @@ const mapStateToProps = state => {
 		ingredients: state.burger.ingredients,
 		totalPrice: state.burger.totalPrice,
 		isError: state.burger.isError,
-		errorMessage: state.burger.errorMessage
+		errorMessage: state.burger.errorMessage,
+		isAuthenticated: state.auth.token ? true : false
 	};
 };
 
@@ -119,7 +127,9 @@ const mapDispatchToProps = dispatch => {
 			dispatch(actionCreator.addIngredient(ingredient)),
 		remove_ingredients: ingredient =>
 			dispatch(actionCreator.removeIngredient(ingredient)),
-		initIngredients: () => dispatch(actionCreator.initIngredients())
+		initIngredients: () => dispatch(actionCreator.initIngredients()),
+		onburgerBuildingStarted: () =>
+			dispatch(actionCreator.burgerBuildingStarted())
 	};
 };
 

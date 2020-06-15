@@ -29,8 +29,9 @@ export const burgerPurchaseCompleted = () => {
 export const purchaseBurger = (postData, token) => {
 	return dispatch => {
 		dispatch(burgerPurchaseStarted());
+		let queryParam = "/orders.json?auth=" + token;
 		axios
-			.post("/orders.json?auth=" + token, { postData })
+			.post(queryParam, { postData })
 			.then(res => {
 				console.log("[Order Reducer]: purchaseBurger, res", res.data.name);
 				dispatch(

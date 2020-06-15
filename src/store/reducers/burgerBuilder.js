@@ -12,7 +12,8 @@ const initialState = {
 	ingredients: null,
 	totalPrice: 12,
 	isError: false,
-	errorMessage: ""
+	errorMessage: "",
+	burgerBuildingStarted: false
 };
 
 let stateChanges = null;
@@ -51,7 +52,8 @@ const setIngredients = (state, action) => {
 			Meat: action.payload.ingredients.Meat
 		},
 		isError: false,
-		errorMessage: ""
+		errorMessage: "",
+		burgerBuildingStarted: false
 	};
 	return updateObject(state, stateChanges);
 };
@@ -61,6 +63,10 @@ const fetchIngredientsFailed = (state, action) => {
 		isError: true,
 		errorMessage: action.payload.errorMessage
 	});
+};
+
+const burgerBuildingStarted = state => {
+	return updateObject(state, { burgerBuildingStarted: true });
 };
 
 const reducer = (state = initialState, action) => {
@@ -76,6 +82,9 @@ const reducer = (state = initialState, action) => {
 
 		case actionTypes.FETCH_INGREDIENTS_FAILED:
 			return fetchIngredientsFailed(state, action);
+
+		case actionTypes.BURGER_BUILDING_STARTED:
+			return burgerBuildingStarted(state, action);
 
 		default:
 			return state;

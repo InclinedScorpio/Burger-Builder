@@ -44,3 +44,9 @@ export const initIngredients = () => {
 			});
 	};
 };
+
+export const burgerBuildingStarted = () => {
+	return {
+		type: actionTypes.BURGER_BUILDING_STARTED
+	};
+};
