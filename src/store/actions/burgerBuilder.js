@@ -50,3 +50,9 @@ export const burgerBuildingStarted = () => {
 		type: actionTypes.BURGER_BUILDING_STARTED
 	};
 };
+
+export const resetBurgerBuilder = () => {
+	return {
+		type: actionTypes.RESET_BURGER_BUILDER
+	};
+};

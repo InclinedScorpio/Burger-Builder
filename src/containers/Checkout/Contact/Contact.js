@@ -9,7 +9,7 @@ import axios from "../../../axiosOrders";
 import styleContact from "./Contact.module.css";
 import Input from "../../../components/UI/Input/Input";
 import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
-import * as actionCreators from "../../../store/actions/index";
+import * as actions from "../../../store/actions/index";
 
 class Contact extends Component {
 	state = {
@@ -88,11 +88,38 @@ class Contact extends Component {
 				value: "cheapest"
 			}
 		},
-		isLoading: false
+		isLoading: false,
+		isError: false,
+		errorMessage: ""
+	};
+
+	axiosOrderDeliveryHandler = postData => {
+		let queryParam = "/orders.json?auth=" + this.props.token;
+
+		axios
+			.post(queryParam, { ...postData })
+			.then(_ => {
+				this.setState({
+					isLoading: false,
+					isError: false,
+					errorMessage: ""
+				});
+				this.props.resetBurgerBuilder();
+			})
+			.catch(err => {
+				this.setState({
+					isLoading: false,
+					isError: true,
+					errorMessage: err.response
+				});
+			});
 	};
 
 	placeOrderHandle = event => {
 		event.preventDefault();
+		this.setState({
+			isLoading: true
+		});
 
 		const order = {
 			ingredients: {
@@ -105,10 +132,10 @@ class Contact extends Component {
 			name: this.state.formData.name.value,
 			email: this.state.formData.email.value,
 			address: this.state.formData.address.value,
-			deliveryMethod: this.state.formData.delivery_method.value
+			deliveryMethod: this.state.formData.delivery_method.value,
+			userId: this.props.userId
 		};
-
-		this.props.onburgerPurchased(order, this.props.token);
+		this.axiosOrderDeliveryHandler(order);
 	};
 
 	validationHandler = (value, constraints) => {
@@ -181,7 +208,6 @@ class Contact extends Component {
 	};
 
 	render() {
-		console.log("State ####", this.state);
 		let isSubmissionActive = true;
 		let inputElements = [];
 		for (let key in this.state.formData) {
@@ -198,17 +224,22 @@ class Contact extends Component {
 		}
 
 		let redirectToBurgerBuilder = "";
-		if (this.props.purchased || this.props.orders) {
-			this.props.onBurgerPurchaseCompleted();
+		if (this.props.purchased) {
 			redirectToBurgerBuilder = <Redirect to="/" />;
 		}
 
 		return (
 			<div className={styleContact.Contact}>
 				{redirectToBurgerBuilder}
+
 				<form onSubmit={this.placeOrderHandle}>
-					<h2>Please fill Contact Details</h2>
-					{this.props.isLoading ? (
+					<h2>
+						{this.state.isError
+							? this.state.errorMessage
+							: "Please fill Contact Details"}
+					</h2>
+
+					{this.state.isLoading ? (
 						<Spinner />
 					) : (
 						<div>
@@ -240,19 +271,15 @@ class Contact extends Component {
 
 const mapStateToProps = state => {
 	return {
-		isLoading: state.order.isLoading,
-		purchased: state.order.purchased,
 		ingredients: state.burger.ingredients,
-		token: state.auth.token
+		token: state.auth.token,
+		userId: state.auth.userId
 	};
 };
 
 const mapDispatchToProps = dispatch => {
 	return {
-		onburgerPurchased: (postData, token) =>
-			dispatch(actionCreators.purchaseBurger(postData, token)),
-		onBurgerPurchaseCompleted: () =>
-			dispatch(actionCreators.burgerPurchaseCompleted())
+		resetBurgerBuilder: () => dispatch(actions.resetBurgerBuilder())
 	};
 };
 

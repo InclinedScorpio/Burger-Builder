@@ -69,6 +69,10 @@ const burgerBuildingStarted = state => {
 	return updateObject(state, { burgerBuildingStarted: true });
 };
 
+const resetBurgerBuilder = state => {
+	return updateObject(state, initialState);
+};
+
 const reducer = (state = initialState, action) => {
 	switch (action.type) {
 		case actionTypes.ADD_INGREDIENTS:
@@ -85,6 +89,9 @@ const reducer = (state = initialState, action) => {
 
 		case actionTypes.BURGER_BUILDING_STARTED:
 			return burgerBuildingStarted(state, action);
+
+		case actionTypes.RESET_BURGER_BUILDER:
+			return resetBurgerBuilder(state, action);
 
 		default:
 			return state;

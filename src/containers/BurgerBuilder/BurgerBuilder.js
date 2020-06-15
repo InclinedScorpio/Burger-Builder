@@ -13,14 +13,13 @@ import Loader from "../../components/UI/Loader/Loader";
 
 class BurgerBuilder extends Component {
 	state = {
-		ingredientsChoosen: 0,
 		paying: false,
 		isLoading: false
 	};
 
 	componentDidMount = () => {
 		console.log("[BurgerBuilder.js]:ComponentDidMount");
-		this.props.initIngredients();
+		if (!this.props.ingredients) this.props.initIngredients();
 
 		// if (this.props.ingredients == null) {
 		// 	axiosInstance
