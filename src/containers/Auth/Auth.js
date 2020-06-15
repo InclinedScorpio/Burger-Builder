@@ -193,9 +193,14 @@ class Auth extends Component {
 
 		let redirectAvailable = null;
 		if (this.props.isAuthenticated) {
+			console.log("00000000000");
+
 			if (this.props.isBurgeBuildingStarted) {
+				console.log("11111111111");
 				redirectAvailable = <Redirect to="/checkout" />;
 			} else {
+				console.log("22222222");
+
 				redirectAvailable = <Redirect to="/" />;
 			}
 		}

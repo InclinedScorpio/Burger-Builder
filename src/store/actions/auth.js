@@ -34,12 +34,19 @@ export const authCheck = (data, isSignup) => {
 		axios
 			.post(url, data)
 			.then(res => {
+				let tokenExpiresAt = new Date(
+					new Date().getTime() + res.data.expiresIn * 1000
+				);
+				localStorage.setItem("token", res.data.idToken);
+				localStorage.setItem("tokenExpirationDateTime", tokenExpiresAt);
+				localStorage.setItem("userId", res.data.localId);
+
 				dispatch(authSuccess(res.data));
-				console.log("Result came==>", res);
+				dispatch(autoTimeout(res.data.expiresIn));
 			})
 			.catch(err => {
+				console.log("Error is", err.response);
 				dispatch(authFailed(err.response.data.error.message));
-				console.log("Error came==>", err.response.data.error.message);
 			});
 	};
 };
@@ -50,10 +57,47 @@ export const removeError = () => {
 	};
 };
 
-export const signout = timeoutDuration => {
+export const signout = () => {
+	localStorage.removeItem("token");
+	localStorage.removeItem("tokenExpirationDateTime");
+	localStorage.removeItem("userId");
+	return {
+		type: actionTypes.SIGNOUT
+	};
+};
+
+const autoTimeout = timeOutDuration => {
+	console.log("TIMEOUT AT::::", timeOutDuration);
 	return dispatch => {
 		setTimeout(() => {
-			dispatch({ type: actionTypes.SIGNOUT });
-		}, timeoutDuration * 1000);
+			dispatch(signout());
+		}, timeOutDuration * 1000);
+	};
+};
+
+export const checkAutoLoginStatus = () => {
+	return dispatch => {
+		console.log("Called 2");
+		let token = localStorage.getItem("token");
+		if (!token) {
+			dispatch(signout());
+		} else {
+			console.log("Called 4");
+
+			let timeStored = new Date(
+				localStorage.getItem("tokenExpirationDateTime")
+			);
+			let remainingTime = (timeStored.getTime() - new Date().getTime()) / 1000;
+			if (remainingTime <= 500) {
+				dispatch(signout());
+			} else {
+				let data = {
+					idToken: token,
+					localId: localStorage.getItem("userId")
+				};
+				dispatch(authSuccess(data));
+				autoTimeout(remainingTime);
+			}
+		}
 	};
 };
