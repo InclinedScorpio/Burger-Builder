@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
-import { compose } from "redux";
 import { connect } from "react-redux";
+import { validationHandler } from "../../../shared/utilities";
 
 import Button from "../../../components/UI/Button/Button";
 import Spinner from "../../../components/UI/Loader/Loader";
@@ -138,50 +138,6 @@ class Contact extends Component {
 		this.axiosOrderDeliveryHandler(order);
 	};
 
-	validationHandler = (value, constraints) => {
-		if (constraints.required) {
-			if (value.trim() == "") {
-				return { result: false, message: "Field can't be empty!" };
-			}
-		}
-		if (constraints.max) {
-			if (value.trim().length > constraints.max) {
-				return {
-					result: false,
-					message: `Can't use more than ${constraints.max} characters.`
-				};
-			}
-		}
-		if (constraints.min) {
-			if (value.trim().length < constraints.min) {
-				return {
-					result: false,
-					message: `There must be atleast ${constraints.min} characters.`
-				};
-			}
-		}
-		if (constraints.in) {
-			if (!constraints.in.includes(value)) {
-				return {
-					result: false,
-					message: `We are not supporting ${value} currently.`
-				};
-			}
-		}
-		if (constraints.format) {
-			let reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-			if (!reg.test(value)) {
-				return {
-					result: false,
-					message: `That doesn't seems like an email.`
-				};
-			}
-		}
-		return {
-			result: true
-		};
-	};
-
 	inputChangeHandler = (event, inputType) => {
 		let updatedForm = { ...this.state.formData };
 		let inputTargetted = { ...updatedForm[inputType] };
@@ -190,12 +146,12 @@ class Contact extends Component {
 		updatedForm[inputType] = inputTargetted;
 		updatedForm[inputType].isTouched = true;
 
-		let isValid = this.validationHandler(
+		let isValid = validationHandler(
 			event.target.value,
 			inputTargetted.constraints
 		);
 
-		if (isValid.result == false) {
+		if (isValid.result === false) {
 			updatedForm[inputType].errorMessage = isValid.message;
 		} else {
 			updatedForm[inputType].errorMessage = null;
@@ -215,7 +171,8 @@ class Contact extends Component {
 				id: key,
 				config: this.state.formData[key],
 				isValid: this.state.formData[key].isValid,
-				errorMessage: this.state.formData[key].errorMessage
+				errorMessage: this.state.formData[key].errorMessage,
+				value: this.state.formData[key].value
 			});
 			isSubmissionActive =
 				isSubmissionActive &&
@@ -254,6 +211,7 @@ class Contact extends Component {
 											this.inputChangeHandler(event, el.id);
 										}}
 										errorMessage={el.errorMessage}
+										valueReceived={el.value}
 									/>
 								))}
 							<div>

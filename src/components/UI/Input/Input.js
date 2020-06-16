@@ -9,7 +9,6 @@ const Input = props => {
 		inputClasses.push(styleInput.Error);
 	}
 
-	console.log("CALLED !!!!!isVALIDIIIIIDD:::", props.isValid);
 	let inputElement = null;
 	switch (props.elementType) {
 		case "input":
@@ -21,6 +20,7 @@ const Input = props => {
 						className={inputClasses.join(" ")}
 						{...props.config}
 						onChange={props.inputChanged}
+						value={props.valueReceived}
 					/>
 				</Auxiliary>
 			);

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import axiosInstance from "axios";
 import { connect } from "react-redux";
 import * as actionCreator from "../../store/actions/index";
 import axios from "../../axiosOrders";
@@ -18,7 +17,6 @@ class BurgerBuilder extends Component {
 	};
 
 	componentDidMount = () => {
-		console.log("[BurgerBuilder.js]:ComponentDidMount");
 		if (!this.props.ingredients) this.props.initIngredients();
 
 		// if (this.props.ingredients == null) {
@@ -73,7 +71,6 @@ class BurgerBuilder extends Component {
 	};
 
 	render() {
-		console.log("MyState%", this.state);
 		return this.props.ingredients ? (
 			<Auxiliary>
 				<Modal show={this.state.paying} closeModal={this.cancelPaymentHandler}>

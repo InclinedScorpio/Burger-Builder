@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 //components
 import NavigationItems from "../NavigationItems/NavigationItems";
@@ -16,7 +16,7 @@ const SideDrawer = props => {
 	}
 
 	return (
-		<div className={classes.join(" ")}>
+		<div className={classes.join(" ")} onClick={props.toggleSideDrawer}>
 			<div className={styleSD.Logo}>
 				<Logo />
 			</div>

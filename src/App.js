@@ -9,7 +9,6 @@ import Checkout from "./containers/Checkout/Checkout";
 import Orders from "./containers/Orders/Orders";
 import Auth from "./containers/Auth/Auth";
 import Signout from "./containers/Auth/Signout/Signout";
-import { compose } from "@material-ui/system";
 
 class App extends Component {
 	componentDidMount = () => {
@@ -18,7 +17,6 @@ class App extends Component {
 
 	render() {
 		let routes = null;
-		console.log("Redirected:::", this.props.isAuthenticated);
 		if (this.props.isAuthenticated) {
 			routes = (
 				<Switch>

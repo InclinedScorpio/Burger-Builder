@@ -4,7 +4,6 @@ import React from "react";
 import styleBC from "./BuildControls.module.css";
 //components
 import BuildControl from "./BuildControl/BuildControl";
-import Auxiliary from "../../hoc/Auxiliary/Auxiliary";
 
 const ingredients = ["Cheese", "Meat", "Bacon", "Salad"];
 

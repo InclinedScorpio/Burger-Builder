@@ -5,7 +5,6 @@ import styleCS from "./CheckoutSummary.module.css";
 import Button from "../../UI/Button/Button";
 
 const CheckoutSummary = props => {
-	console.log("checkout summary props", props);
 	return (
 		<div className={styleCS.CheckoutSummary}>
 			<h3

@@ -52,6 +52,7 @@ class Layout extends Component {
 						closeModal={this.backDropCloseHandler}
 					/>
 					<SideDrawer
+						toggleSideDrawer={this.toggleSideDrawerHandler}
 						sideDrawerVisible={this.state.sideDrawerVisible}
 						isAuthenticated={this.props.isAuthenticated}
 					/>

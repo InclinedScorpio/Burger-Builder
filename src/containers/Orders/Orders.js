@@ -30,9 +30,8 @@ class Orders extends Component {
 		axios
 			.get("/orders.json" + queryParam)
 			.then(res => {
-				console.log("Order got are::", res);
 				for (const key in res.data) {
-					ordersArray.push(res.data[key]);
+					ordersArray.push({ ...res.data[key], id: key });
 				}
 				this.setState({
 					orders: [...ordersArray],
@@ -40,7 +39,6 @@ class Orders extends Component {
 				});
 			})
 			.catch(err => {
-				console.log("Error in orders is::", err);
 				this.setState({
 					isError: true,
 					errorMessage: err.response,

@@ -6,21 +6,19 @@ const Order = props => {
 	let ingredients = [];
 
 	for (let key in props.order.ingredients) {
-		// console.log("Key", key, "Value", props.order.order.ingredients[key]);
 		ingredients.push({
 			key: key,
 			amount: props.order.ingredients[key]
 		});
 	}
-	console.log("EEEEE", ingredients);
 	return (
 		<div className={styleOrder.Order}>
 			<strong>INGREDIENTS:</strong>
 
 			{ingredients &&
-				ingredients.map(ig => {
+				ingredients.map((ig, index) => {
 					return (
-						<p>
+						<p key={index}>
 							{" "}
 							{ig.key} : {ig.amount}
 						</p>

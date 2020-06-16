@@ -35,6 +35,9 @@ let BurgerIngredients = props => {
 		case "Salad":
 			ingredients = <div className={styleBI.Salad}></div>;
 			break;
+		default:
+			ingredients = <div className={styleBI.Meat}></div>;
+			break;
 	}
 
 	return ingredients;

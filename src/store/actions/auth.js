@@ -45,7 +45,6 @@ export const authCheck = (data, isSignup) => {
 				dispatch(autoTimeout(res.data.expiresIn));
 			})
 			.catch(err => {
-				console.log("Error is", err.response);
 				dispatch(authFailed(err.response.data.error.message));
 			});
 	};
@@ -67,7 +66,6 @@ export const signout = () => {
 };
 
 const autoTimeout = timeOutDuration => {
-	console.log("TIMEOUT AT::::", timeOutDuration);
 	return dispatch => {
 		setTimeout(() => {
 			dispatch(signout());
@@ -77,13 +75,10 @@ const autoTimeout = timeOutDuration => {
 
 export const checkAutoLoginStatus = () => {
 	return dispatch => {
-		console.log("Called 2");
 		let token = localStorage.getItem("token");
 		if (!token) {
 			dispatch(signout());
 		} else {
-			console.log("Called 4");
-
 			let timeStored = new Date(
 				localStorage.getItem("tokenExpirationDateTime")
 			);

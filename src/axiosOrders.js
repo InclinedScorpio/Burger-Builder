@@ -5,12 +5,10 @@ let instance = axios.create({
 });
 
 instance.interceptors.request.use(config => {
-	console.log("Request going ::", config);
 	return config;
 });
 
 instance.interceptors.response.use(config => {
-	console.log("Response came ::", config);
 	return config;
 });
 

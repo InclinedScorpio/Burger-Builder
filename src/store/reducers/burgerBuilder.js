@@ -1,5 +1,5 @@
 import * as actionTypes from "../actions/actionTypes";
-import { updateObject } from "../utilities";
+import { updateObject } from "../../shared/utilities";
 
 const price = {
 	Salad: 2.3,
@@ -43,7 +43,6 @@ const removeIngredients = (state, action) => {
 };
 
 const setIngredients = (state, action) => {
-	console.log("Inside reducers-- action :", action);
 	stateChanges = {
 		ingredients: {
 			Salad: action.payload.ingredients.Salad,

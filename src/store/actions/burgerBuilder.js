@@ -31,15 +31,12 @@ export const fetchIngredientsFailed = err => {
 
 export const initIngredients = () => {
 	return dispatch => {
-		console.log("[ACTION-BURGERBUILDER]:initIngredients");
 		axios
 			.get("https://tech-burger.firebaseio.com/ingredients.json")
 			.then(res => {
-				console.log("Result received RES:::", res);
 				dispatch(setIngredients(res.data));
 			})
 			.catch(err => {
-				console.log("Error is :::", err);
 				dispatch(fetchIngredientsFailed(err.message)); //here so to show error in BB
 			});
 	};

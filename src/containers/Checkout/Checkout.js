@@ -3,7 +3,6 @@ import { Route, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 
 import CheckoutSummary from "../../components/Order/CheckoutSummary/CheckoutSummary";
-import Spinner from "../../components/UI/Loader/Loader";
 import Contact from "./Contact/Contact";
 
 class Checkout extends Component {
@@ -44,7 +43,6 @@ class Checkout extends Component {
 	};
 
 	render() {
-		console.log("State::", this.state);
 		return (
 			<div>
 				{this.props.ingredients ? (

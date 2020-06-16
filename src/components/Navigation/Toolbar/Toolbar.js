@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 
 //style
 import styleTB from "./Toolbar.module.css";
