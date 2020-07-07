@@ -3,7 +3,19 @@ export {
 	removeIngredient,
 	initIngredients,
 	burgerBuildingStarted,
-	resetBurgerBuilder
+	resetBurgerBuilder,
+	setIngredients,
+	fetchIngredientsFailed
 } from "./burgerBuilder";
 
-export { authCheck, removeError, signout, checkAutoLoginStatus } from "./auth";
+export {
+	authCheck,
+	removeError,
+	signout,
+	authStart,
+	autoTimeout,
+	authFailed,
+	authSuccess,
+	signoutCompletion,
+	checkAutoLoginStatus
+} from "./auth";
